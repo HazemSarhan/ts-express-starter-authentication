@@ -1,0 +1,196 @@
+openapi: 3.0.0
+info:
+  title: Authentication & Authorization
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api/v1
+tags:
+  - name: Authentication
+  - name: Users
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register User
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: user2
+                email:
+                  type: string
+                  example: hazoomy2021@outlook.com
+                password:
+                  type: string
+                  example: secret
+                bio:
+                  type: string
+                  example: this is bio
+                profile_picture:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/verify:
+    post:
+      tags:
+        - Authentication
+      summary: Verify User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: hazoomy2021@outlook.com
+                code: 62d09b
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: hazem@admin.com
+                password: secret
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /auth/logout:
+    get:
+      tags:
+        - Authentication
+      summary: Logout User
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get All Users
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: userId
+    get:
+      tags:
+        - Users
+      summary: Get Single User By Id
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    patch:
+      tags:
+        - Users
+      summary: Update User Data
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: user3
+                email:
+                  type: string
+                  example: hazoomy2021@outlook.com
+                password:
+                  type: string
+                  example: secret
+                bio:
+                  type: string
+                  example: this is updated bio
+                role:
+                  type: string
+                  example: ADMIN
+                profile_picture:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users/{id}/updatePassword:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: userId
+    patch:
+      tags:
+        - Users
+      summary: Update User Password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                oldPassword: newSecret
+                newPassword: secret
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /users/{id}/updateRole:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: userId
+    patch:
+      tags:
+        - Users
+      summary: Update User Role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                role: ADMIN
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
