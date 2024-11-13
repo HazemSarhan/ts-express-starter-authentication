@@ -6,6 +6,7 @@ interface User {
   bio: string | null;
   role: string;
   profile_picture: string | null;
+  status: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -17,6 +18,7 @@ interface TokenUser {
   role: string;
   bio?: string | null;
   image?: string;
+  status: string;
 }
 
 export const createTokenUser = (user: Partial<User>) => {
@@ -27,5 +29,6 @@ export const createTokenUser = (user: Partial<User>) => {
     role: user.role,
     bio: user.bio,
     image: user.profile_picture,
+    status: user.status,
   };
 };

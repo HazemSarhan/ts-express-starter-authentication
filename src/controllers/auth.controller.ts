@@ -10,15 +10,7 @@ import fs from 'fs';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { sendEmail } from '../utils/mailer';
-
-interface UserData {
-  name: string;
-  email: string;
-  password: string;
-  bio?: string;
-  profile_picture?: string;
-  role?: string;
-}
+import { UserData } from '../interfaces/auth';
 
 const generateVerificationCode = (): string => {
   return crypto.randomBytes(3).toString('hex'); // Generates a 6-character hex code
@@ -142,6 +134,10 @@ export const login = async (req: Request, res: Response) => {
   const isPasswordCorrect = await bcrypt.compare(password, user.password);
   if (!isPasswordCorrect) {
     throw new UnauthenticatedError('Invalid Credintials');
+  }
+
+  if (user.status === 'PENDING') {
+    throw new BadRequestError('Please active your account!');
   }
 
   // Generate Token

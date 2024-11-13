@@ -13,6 +13,7 @@ import {
 } from '../utils';
 import { UserRole } from '../utils/checkPermissions';
 import bcrypt from 'bcryptjs';
+import { UpdateData } from '../interfaces/user';
 
 export const getAllUsers = async (req: Request, res: Response) => {
   const users = await prisma.user.findMany({
@@ -52,13 +53,6 @@ export const getUserById = async (req: Request, res: Response) => {
   }
   res.status(StatusCodes.OK).json({ user });
 };
-
-interface UpdateData {
-  name?: string;
-  email?: string;
-  bio?: string;
-  profile_picture?: string;
-}
 
 interface AuthenticatedRequest extends Request {
   user?: {
